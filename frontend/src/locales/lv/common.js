@@ -8,7 +8,7 @@ const TRANSLATIONS = {
     llm: {
       title: "LLM preferences",
       description:
-        "AnythingLLM var strādāt ar daudziem LLM pakalpojumu sniedzējiem. Šis būs pakalpojums, kas apstrādās sarunas.",
+        "RuyaLLM var strādāt ar daudziem LLM pakalpojumu sniedzējiem. Šis būs pakalpojums, kas apstrādās sarunas.",
     },
     userSetup: {
       title: "Lietotāja iestatīšana",
@@ -36,15 +36,15 @@ const TRANSLATIONS = {
         "Šos iestatījumus var pārkonfigurēt jebkurā laikā iestatījumos.",
     },
     survey: {
-      title: "Laipni lūgti AnythingLLM",
+      title: "Laipni lūgti RuyaLLM",
       description:
-        "Palīdziet mums veidot AnythingLLM atbilstoši jūsu vajadzībām. Neobligāti.",
+        "Palīdziet mums veidot RuyaLLM atbilstoši jūsu vajadzībām. Neobligāti.",
       email: "Kāds ir jūsu e-pasts?",
-      useCase: "Kam izmantosiet AnythingLLM?",
+      useCase: "Kam izmantosiet RuyaLLM?",
       useCaseWork: "Darbam",
       useCasePersonal: "Personīgai lietošanai",
       useCaseOther: "Citam nolūkam",
-      comment: "Kā jūs uzzinājāt par AnythingLLM?",
+      comment: "Kā jūs uzzinājāt par RuyaLLM?",
       commentPlaceholder:
         "Reddit, Twitter, GitHub, YouTube utt. - Ļaujiet mums zināt, kā jūs mūs atradāt!",
       skip: "Izlaist aptauju",
@@ -53,7 +53,7 @@ const TRANSLATIONS = {
     workspace: {
       title: "Izveidojiet savu pirmo darba telpu",
       description:
-        "Izveidojiet savu pirmo darba telpu un sāciet darbu ar AnythingLLM.",
+        "Izveidojiet savu pirmo darba telpu un sāciet darbu ar RuyaLLM.",
     },
   },
   common: {
@@ -127,11 +127,11 @@ const TRANSLATIONS = {
   },
   welcomeMessage: {
     part1:
-      "Laipni lūgti AnythingLLM, AnythingLLM ir Mintplex Labs izstrādāts atvērtā koda AI rīks, kas pārvērš jebko par apmācītu čatbotu, kuru varat izmantot vaicājumiem un sarunām. AnythingLLM ir BYOK (bring-your-own-keys) programmatūra, tāpēc nav abonēšanas, maksas vai papildu maksājumu par šo programmatūru, izņemot pakalpojumus, kurus vēlaties izmantot ar to.",
+      "Laipni lūgti RuyaLLM, RuyaLLM ir Mintplex Labs izstrādāts atvērtā koda AI rīks, kas pārvērš jebko par apmācītu čatbotu, kuru varat izmantot vaicājumiem un sarunām. RuyaLLM ir BYOK (bring-your-own-keys) programmatūra, tāpēc nav abonēšanas, maksas vai papildu maksājumu par šo programmatūru, izņemot pakalpojumus, kurus vēlaties izmantot ar to.",
     part2:
-      "AnythingLLM ir vienkāršākais veids, kā apvienot spēcīgus AI produktus, piemēram, OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB un citus pakalpojumus, kārtīgā paketē bez liekas piepūles, lai palielinātu savu produktivitāti 100 reizes.",
+      "RuyaLLM ir vienkāršākais veids, kā apvienot spēcīgus AI produktus, piemēram, OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB un citus pakalpojumus, kārtīgā paketē bez liekas piepūles, lai palielinātu savu produktivitāti 100 reizes.",
     part3:
-      "AnythingLLM var darboties pilnībā lokāli jūsu datorā ar minimālu piepūli, jūs pat nepamanīsiet tā klātbūtni! GPU nav nepieciešams. Pieejama arī mākoņa un lokālā instalācija.\nAI rīku ekosistēma kļūst spēcīgāka ar katru dienu. AnythingLLM to padara viegli izmantojamu.",
+      "RuyaLLM var darboties pilnībā lokāli jūsu datorā ar minimālu piepūli, jūs pat nepamanīsiet tā klātbūtni! GPU nav nepieciešams. Pieejama arī mākoņa un lokālā instalācija.\nAI rīku ekosistēma kļūst spēcīgāka ar katru dienu. RuyaLLM to padara viegli izmantojamu.",
     githubIssue: "Izveidot problēmpieteikumu GitHub",
     user1: "Kā man sākt?!",
     part4:
@@ -140,7 +140,7 @@ const TRANSLATIONS = {
     user2:
       "Vai tas ir kaut kas līdzīgs AI dropbox vai tamlīdzīgi? Kā ar sarunām? Vai tas ir čatbots?",
     part5:
-      "AnythingLLM ir vairāk nekā vienkārši gudrāks Dropbox.\n\nAnythingLLM piedāvā divus veidus, kā runāt ar saviem datiem:\n\n<i>Vaicājums:</i> Jūsu sarunas atgriezīs datus vai secinājumus, kas atrasti dokumentos jūsu darba telpā, kam tam ir piekļuve. Vairāk dokumentu pievienošana darba telpai padara to gudrāku! \n\n<i>Saruna:</i> Jūsu dokumenti + jūsu notiekošā sarunu vēsture abi vienlaikus veido LLM zināšanas. Lieliski piemērots reāllaika teksta informācijas vai korekciju un pārpratumu pievienošanai, kas varētu rasties LLM. \n\nJūs varat pārslēgties starp abiem režīmiem \n<i>sarunas vidū!</i>",
+      "RuyaLLM ir vairāk nekā vienkārši gudrāks Dropbox.\n\nRuyaLLM piedāvā divus veidus, kā runāt ar saviem datiem:\n\n<i>Vaicājums:</i> Jūsu sarunas atgriezīs datus vai secinājumus, kas atrasti dokumentos jūsu darba telpā, kam tam ir piekļuve. Vairāk dokumentu pievienošana darba telpai padara to gudrāku! \n\n<i>Saruna:</i> Jūsu dokumenti + jūsu notiekošā sarunu vēsture abi vienlaikus veido LLM zināšanas. Lieliski piemērots reāllaika teksta informācijas vai korekciju un pārpratumu pievienošanai, kas varētu rasties LLM. \n\nJūs varat pārslēgties starp abiem režīmiem \n<i>sarunas vidū!</i>",
     user3: "Vau, tas izklausās lieliski, ļaujiet man to izmēģināt tūlīt!",
     part6: "Izbaudi!",
     starOnGitHub: "Zvaigzne GitHub",
@@ -151,7 +151,7 @@ const TRANSLATIONS = {
     checklist: {
       title: "Darba sākšana",
       tasksLeft: "atlikušie uzdevumi",
-      completed: "Jūs esat ceļā, lai kļūtu par AnythingLLM ekspertu!",
+      completed: "Jūs esat ceļā, lai kļūtu par RuyaLLM ekspertu!",
       dismiss: "aizvērt",
       tasks: {
         create_workspace: {
@@ -256,7 +256,7 @@ const TRANSLATIONS = {
       add: "Pievienot jaunu ziņu",
       save: "Saglabāt ziņas",
       heading: "Izskaidro man",
-      body: "AnythingLLM priekšrocības",
+      body: "RuyaLLM priekšrocības",
     },
     pfp: {
       title: "Asistenta profila attēls",
@@ -471,16 +471,16 @@ const TRANSLATIONS = {
   customization: {
     interface: {
       title: "UI preferences",
-      description: "Iestatiet savas UI preferences AnythingLLM.",
+      description: "Iestatiet savas UI preferences RuyaLLM.",
     },
     branding: {
       title: "Zīmolrade un identitāte",
       description:
-        "Pielāgojiet savu AnythingLLM instanci ar pielāgotu zīmolradi.",
+        "Pielāgojiet savu RuyaLLM instanci ar pielāgotu zīmolradi.",
     },
     chat: {
       title: "Saruna",
-      description: "Iestatiet savas sarunas preferences AnythingLLM.",
+      description: "Iestatiet savas sarunas preferences RuyaLLM.",
       auto_submit: {
         title: "Automātiski iesniegt runas ievadi",
         description: "Automātiski iesniegt runas ievadi pēc klusuma perioda",
@@ -522,7 +522,7 @@ const TRANSLATIONS = {
       "display-language": {
         title: "Displeja valoda",
         description:
-          "Izvēlieties vēlamo valodu AnythingLLM lietotāja saskarnei - kad pieejami tulkojumi.",
+          "Izvēlieties vēlamo valodu RuyaLLM lietotāja saskarnei - kad pieejami tulkojumi.",
       },
       logo: {
         title: "Zīmola logotips",
@@ -541,7 +541,7 @@ const TRANSLATIONS = {
         system: "sistēma",
         user: "lietotājs",
         message: "ziņojums",
-        assistant: "AnythingLLM čata asistents",
+        assistant: "RuyaLLM čata asistents",
         "double-click": "Dubultklikšķis, lai rediģētu...",
         save: "Saglabāt ziņojumus",
       },
@@ -571,7 +571,7 @@ const TRANSLATIONS = {
   api: {
     title: "API atslēgas",
     description:
-      "API atslēgas ļauj to īpašniekam programmatiski piekļūt un pārvaldīt šo AnythingLLM instanci.",
+      "API atslēgas ļauj to īpašniekam programmatiski piekļūt un pārvaldīt šo RuyaLLM instanci.",
     link: "Lasīt API dokumentāciju",
     generate: "Ģenerēt jaunu API atslēgu",
     table: {
@@ -583,7 +583,7 @@ const TRANSLATIONS = {
   llm: {
     title: "LLM preferences",
     description:
-      "Šie ir akreditācijas dati un iestatījumi jūsu vēlamajam LLM čata un iegulšanas pakalpojuma sniedzējam. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas, pretējā gadījumā AnythingLLM nedarbosies pareizi.",
+      "Šie ir akreditācijas dati un iestatījumi jūsu vēlamajam LLM čata un iegulšanas pakalpojuma sniedzējam. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas, pretējā gadījumā RuyaLLM nedarbosies pareizi.",
     provider: "LLM pakalpojuma sniedzējs",
     providers: {
       azure_openai: {
@@ -603,7 +603,7 @@ const TRANSLATIONS = {
       "Šie ir akreditācijas dati un iestatījumi jūsu vēlamajam transkripcijas modeļa pakalpojuma sniedzējam. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas, pretējā gadījumā multivides faili un audio netiks transkribēti.",
     provider: "Transkripcijas pakalpojuma sniedzējs",
     "warn-start":
-      "Izmantojot lokālo whisper modeli iekārtās ar ierobežotu RAM vai CPU var apstādināt AnythingLLM, apstrādājot multivides failus.",
+      "Izmantojot lokālo whisper modeli iekārtās ar ierobežotu RAM vai CPU var apstādināt RuyaLLM, apstrādājot multivides failus.",
     "warn-recommend":
       "Mēs iesakām vismaz 2GB RAM un augšupielādēt failus <10Mb.",
     "warn-end":
@@ -614,11 +614,11 @@ const TRANSLATIONS = {
     "desc-start":
       "Izmantojot LLM, kas neatbalsta iebūvētu iegulšanas dzinēju - jums var būt nepieciešams papildus norādīt akreditācijas datus teksta iegulšanai.",
     "desc-end":
-      "Iegulšana ir process, ar kuru teksts tiek pārveidots vektoros. Šie akreditācijas dati ir nepieciešami, lai pārveidotu jūsu failus un vaicājumus formātā, kuru AnythingLLM var izmantot apstrādei.",
+      "Iegulšana ir process, ar kuru teksts tiek pārveidots vektoros. Šie akreditācijas dati ir nepieciešami, lai pārveidotu jūsu failus un vaicājumus formātā, kuru RuyaLLM var izmantot apstrādei.",
     provider: {
       title: "Iegulšanas pakalpojuma sniedzējs",
       description:
-        "Nav nepieciešama iestatīšana, izmantojot AnythingLLM iebūvēto iegulšanas dzinēju.",
+        "Nav nepieciešama iestatīšana, izmantojot RuyaLLM iebūvēto iegulšanas dzinēju.",
     },
   },
   text: {
@@ -645,7 +645,7 @@ const TRANSLATIONS = {
   vector: {
     title: "Vektoru datubāze",
     description:
-      "Šie ir akreditācijas dati un iestatījumi tam, kā darbosies jūsu AnythingLLM instance. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas.",
+      "Šie ir akreditācijas dati un iestatījumi tam, kā darbosies jūsu RuyaLLM instance. Ir svarīgi, lai šīs atslēgas būtu aktuālas un pareizas.",
     provider: {
       title: "Vektoru datubāzes pakalpojuma sniedzējs",
       description: "LanceDB nav nepieciešama konfigurācija.",
@@ -691,7 +691,7 @@ const TRANSLATIONS = {
     password: {
       title: "Aizsardzība ar paroli",
       description:
-        "Aizsargājiet savu AnythingLLM instanci ar paroli. Ja aizmirsīsiet šo paroli, nav atgūšanas metodes, tāpēc pārliecinieties, ka saglabājat šo paroli.",
+        "Aizsargājiet savu RuyaLLM instanci ar paroli. Ja aizmirsīsiet šo paroli, nav atgūšanas metodes, tāpēc pārliecinieties, ka saglabājat šo paroli.",
     },
     instance: {
       title: "Aizsargāt instanci ar paroli",
@@ -714,7 +714,7 @@ const TRANSLATIONS = {
   privacy: {
     title: "Privātums un datu apstrāde",
     description:
-      "Šī ir jūsu konfigurācija tam, kā savienotie trešo pušu pakalpojumu sniedzēji un AnythingLLM apstrādā jūsu datus.",
+      "Šī ir jūsu konfigurācija tam, kā savienotie trešo pušu pakalpojumu sniedzēji un RuyaLLM apstrādā jūsu datus.",
     llm: "LLM izvēle",
     embedding: "Iegulšanas preferences",
     vector: "Vektoru datubāze",
@@ -894,22 +894,22 @@ const TRANSLATIONS = {
       fetching: "Iegūst...",
       "fetch-website": "Iegūt vietni",
       "privacy-notice":
-        "Šie faili tiks augšupielādēti dokumentu apstrādātājā, kas darbojas šajā AnythingLLM instancē. Šie faili netiek nosūtīti vai kopīgoti ar trešo pusi.",
+        "Šie faili tiks augšupielādēti dokumentu apstrādātājā, kas darbojas šajā RuyaLLM instancē. Šie faili netiek nosūtīti vai kopīgoti ar trešo pusi.",
     },
     pinning: {
       what_pinning: "Kas ir dokumentu piespraušana?",
       pin_explained_block1:
-        "Kad jūs <b>piespraudiet</b> dokumentu AnythingLLM, mēs ievietosim visu dokumenta saturu jūsu uzvednes logā, lai jūsu LLM to pilnībā saprastu.",
+        "Kad jūs <b>piespraudiet</b> dokumentu RuyaLLM, mēs ievietosim visu dokumenta saturu jūsu uzvednes logā, lai jūsu LLM to pilnībā saprastu.",
       pin_explained_block2:
         "Tas vislabāk darbojas ar <b>liela konteksta modeļiem</b> vai maziem failiem, kas ir kritiski tā zināšanu bāzei.",
       pin_explained_block3:
-        "Ja jūs nesaņemat vēlamās atbildes no AnythingLLM pēc noklusējuma, tad piespraušana ir lielisks veids, kā iegūt kvalitatīvākas atbildes ar vienu klikšķi.",
+        "Ja jūs nesaņemat vēlamās atbildes no RuyaLLM pēc noklusējuma, tad piespraušana ir lielisks veids, kā iegūt kvalitatīvākas atbildes ar vienu klikšķi.",
       accept: "Labi, sapratu",
     },
     watching: {
       what_watching: "Ko dara dokumenta novērošana?",
       watch_explained_block1:
-        "Kad jūs <b>novērojat</b> dokumentu AnythingLLM, mēs <i>automātiski</i> sinhronizēsim jūsu dokumenta saturu no tā sākotnējā avota regulāros intervālos. Tas automātiski atjauninās saturu katrā darba vietā, kur šis fails tiek pārvaldīts.",
+        "Kad jūs <b>novērojat</b> dokumentu RuyaLLM, mēs <i>automātiski</i> sinhronizēsim jūsu dokumenta saturu no tā sākotnējā avota regulāros intervālos. Tas automātiski atjauninās saturu katrā darba vietā, kur šis fails tiek pārvaldīts.",
       watch_explained_block2:
         "Šī funkcija pašlaik atbalsta tiešsaistes saturu un nebūs pieejama manuāli augšupielādētiem dokumentiem.",
       watch_explained_block3_start:

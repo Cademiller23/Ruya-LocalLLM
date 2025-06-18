@@ -272,9 +272,11 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
   }, [socketId]);
 
   return (
+    <div className="w-full h-full flex justify-center items-center p-4">
+    <div className="gradient-border w-full max-w-[1400px] h-full rounded-2xl p-[2px]">
     <div
       style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-      className="transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll no-scroll z-[2]"
+      className="bg-ruyaBlack rounded-2xl w-full h-full overflow-hidden flex flex-col"
     >
       {isMobile && <SidebarMobileHeader />}
       <DnDFileUploaderWrapper>
@@ -297,6 +299,8 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         />
       </DnDFileUploaderWrapper>
       <ChatTooltips />
+    </div>
+    </div>
     </div>
   );
 }

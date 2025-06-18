@@ -11,7 +11,8 @@ export default {
       "./src/utils/**/*.js",
       "./src/*.jsx",
       "./index.html",
-      "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}"
+      "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
+      "./src/**/*.{js,jsx,ts,tsx}",
     ]
   },
   theme: {
@@ -21,6 +22,10 @@ export default {
         "360": "360deg"
       },
       colors: {
+        ruyaPurple: {50: '#F5EBFF', 200: '#D4B2FF', 500: '#B06CFF', 700: '#7F35D9'},
+        ruyaTurquoise: {50: '#E6FDFF', 200: '#9BF4FF', 500: '#3DDCFF', 700: '#00A6C9'},
+        ruyaPanel: '#1b1b1e',
+        ruyaBlack: '#0E0E11',
         "black-900": "#141414",
         accent: "#3D4147",
         "sidebar-button": "#31353A",
@@ -53,7 +58,6 @@ export default {
             primary: 'var(--theme-bg-primary)',
             secondary: 'var(--theme-bg-secondary)',
             sidebar: 'var(--theme-bg-sidebar)',
-            container: 'var(--theme-bg-container)',
             chat: 'var(--theme-bg-chat)',
             "chat-input": 'var(--theme-bg-chat-input)',
             "popup-menu": 'var(--theme-popup-menu-bg)',
@@ -61,7 +65,6 @@ export default {
           text: {
             primary: 'var(--theme-text-primary)',
             secondary: 'var(--theme-text-secondary)',
-            placeholder: 'var(--theme-placeholder)',
           },
           sidebar: {
             item: {
@@ -82,6 +85,7 @@ export default {
           },
           "chat-input": {
             border: 'var(--theme-chat-input-border)',
+            text: 'var(--theme-chat-input-text)'
           },
           "action-menu": {
             bg: 'var(--theme-action-menu-bg)',
@@ -143,16 +147,7 @@ export default {
             "button-text": 'var(--theme-checklist-button-text)',
             "button-hover-bg": 'var(--theme-checklist-button-hover-bg)',
             "button-hover-border": 'var(--theme-checklist-button-hover-border)',
-          },
-          button: {
-            text: 'var(--theme-button-text)',
-            'code-hover-text': 'var(--theme-button-code-hover-text)',
-            'code-hover-bg': 'var(--theme-button-code-hover-bg)',
-            'disable-hover-text': 'var(--theme-button-disable-hover-text)',
-            'disable-hover-bg': 'var(--theme-button-disable-hover-bg)',
-            'delete-hover-text': 'var(--theme-button-delete-hover-text)',
-            'delete-hover-bg': 'var(--theme-button-delete-hover-bg)',
-          },
+          }
         },
       },
       backgroundImage: {

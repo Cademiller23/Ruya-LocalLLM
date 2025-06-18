@@ -2,7 +2,7 @@
 apiVersion: v1                                                                                                                                           
 kind: PersistentVolume                                                                                                                                   
 metadata:                                                                                                                                                
-  name: anything-llm-volume                                                                                                                              
+  name: ruya-llm-volume                                                                                                                              
   annotations:                                                                                                                                           
     pv.beta.kubernetes.io/uid: "1000"                                                                                                                    
     pv.beta.kubernetes.io/gid: "1000"                                                                                                                    
@@ -28,7 +28,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: anything-llm-volume-claim
+  name: ruya-llm-volume-claim
   namespace: "{{ namespace }}"
 spec:
   accessModes:
@@ -40,14 +40,14 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: anything-llm
+  name: ruya-llm
   namespace: "{{ namespace }}"
   labels:
-    anything-llm: "true"
+    ruya-llm: "true"
 spec:
   selector:
     matchLabels:
-      k8s-app: anything-llm
+      k8s-app: ruya-llm
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -57,10 +57,10 @@ spec:
   template:
     metadata:
       labels:
-        anything-llm: "true"
-        k8s-app: anything-llm
-        app.kubernetes.io/name: anything-llm
-        app.kubernetes.io/part-of: anything-llm
+        ruya-llm: "true"
+        k8s-app: ruya-llm
+        app.kubernetes.io/name: ruya-llm
+        app.kubernetes.io/part-of: ruya-llm
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /metrics
@@ -83,7 +83,7 @@ spec:
                 values:                                                                                                                                                                                                                                                                  
                 - us-east-1c  
       containers:
-      - name: anything-llm
+      - name: ruya-llm
         resources:
           limits:
             memory: "1Gi"
@@ -159,18 +159,18 @@ spec:
           - name: GID
             value: "1000"
         volumeMounts: 
-          - name: anything-llm-server-storage-volume-mount
+          - name: ruya-llm-server-storage-volume-mount
             mountPath: /storage                                                                                                                                                  
       volumes:
-        - name: anything-llm-server-storage-volume-mount
+        - name: ruya-llm-server-storage-volume-mount
           persistentVolumeClaim:
-            claimName: anything-llm-volume-claim
+            claimName: ruya-llm-volume-claim
 ---
 # This serves the UI and the backend.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: anything-llm-ingress
+  name: ruya-llm-ingress
   namespace: "{{ namespace }}"
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "{{ namespace }}-chat.{{ base_domain }}"
@@ -186,7 +186,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: anything-llm-svc
+            name: ruya-llm-svc
             port: 
               number: 3001
   tls: # < placing a host in the TLS config will indicate a cert should be created
@@ -198,8 +198,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    kubernetes.io/name: anything-llm
-  name: anything-llm-svc
+    kubernetes.io/name: ruya-llm
+  name: ruya-llm-svc
   namespace: "{{ namespace }}"
 spec:
   ports:
@@ -211,4 +211,4 @@ spec:
     targetPort: 9090
     name: metrics
   selector:
-    k8s-app: anything-llm
+    k8s-app: ruya-llm

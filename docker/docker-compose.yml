@@ -1,11 +1,11 @@
 name: anythingllm
 
 networks:
-  anything-llm:
+  ruya-llm:
     driver: bridge
 
 services:
-  anything-llm:
+  ruya-llm:
     container_name: anythingllm
     build:
       context: ../.
@@ -26,6 +26,6 @@ services:
     env_file:
       - .env
     networks:
-      - anything-llm
+      - ruya-llm
     extra_hosts:
       - "host.docker.internal:host-gateway"

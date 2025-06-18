@@ -9,6 +9,7 @@
 :root {
   /* Default theme */
   --theme-loader: #ffffff;
+   --theme-chat-input-text: #1a3770;
   --theme-bg-primary: #0e0f0f;
   --theme-bg-secondary: #1b1b1e;
   --theme-bg-sidebar: #0e0f0f;
@@ -17,7 +18,6 @@
   --theme-bg-chat-input: #27282a;
   --theme-text-primary: #ffffff;
   --theme-text-secondary: rgba(255, 255, 255, 0.6);
-  --theme-placeholder: #57585a;
   --theme-sidebar-item-default: rgba(255, 255, 255, 0.1);
   --theme-sidebar-item-selected: rgba(255, 255, 255, 0.3);
   --theme-sidebar-item-hover: #3f3f42;
@@ -35,7 +35,7 @@
   --theme-sidebar-footer-icon-fill: #ffffff;
   --theme-sidebar-footer-icon-hover: rgba(255, 255, 255, 0.2);
 
-  --theme-chat-input-border: #525355;
+  --theme-chat-input-border: #9B5DE5;
   --theme-action-menu-bg: #27282a;
   --theme-action-menu-item-hover: rgba(255, 255, 255, 0.1);
   --theme-settings-input-bg: #0e0f0f;
@@ -88,36 +88,27 @@
   --theme-home-button-secondary-border-hover: #293056;
 
   --theme-attachment-bg: #18191a;
-  --theme-attachment-error-bg: rgba(180, 35, 24, 0.4);
+  --theme-attachment-error-bg: rgba(20, 19, 19, 0.4);
   --theme-attachment-success-bg: #18191a;
   --theme-attachment-text: #ffffff;
   --theme-attachment-text-secondary: rgba(255, 255, 255, 0.8);
   --theme-attachment-icon: #ffffff;
   --theme-attachment-icon-spinner: #ffffff;
   --theme-attachment-icon-spinner-bg: #27282a;
-
-  --theme-button-text: #a8a9ab;
-  --theme-button-code-hover-text: #7cd4fd;
-  --theme-button-code-hover-bg: #22343f;
-  --theme-button-disable-hover-text: #fec84b;
-  --theme-button-disable-hover-bg: #3a3128;
-  --theme-button-delete-hover-text: #f97066;
-  --theme-button-delete-hover-bg: #37282b;
 }
 
 [data-theme="light"] {
   --theme-loader: #000000;
   --theme-bg-primary: #ffffff;
-  --theme-bg-secondary: #ffffff;
+  --theme-bg-secondary: #322525;
   --theme-bg-sidebar: #edf2fa;
   --theme-bg-container: #f9fbfd;
   --theme-popup-menu-bg: #c2e7fe;
 
-  --theme-bg-chat: #ffffff;
-  --theme-bg-chat-input: #eaeaea;
+  --theme-bg-chat: #1b1b1e;
+  --theme-bg-chat-input: #1b1b1e;
   --theme-text-primary: #0e0f0f;
-  --theme-text-secondary: #7a7d7e;
-  --theme-placeholder: #9ca3af;
+  --theme-text-secondary: #ffffff;
   --theme-sidebar-item-default: #ffffff;
   --theme-sidebar-item-selected: #ffffff;
   --theme-sidebar-item-hover: #c8efff;
@@ -138,7 +129,8 @@
   --theme-sidebar-footer-icon-fill: #6e6f6f;
   --theme-sidebar-footer-icon-hover: #d8d6d6;
 
-  --theme-chat-input-border: #cccccc;
+  --theme-chat-input-text: #27282a;
+  --theme-chat-input-border: #9B5DE5;
   --theme-action-menu-bg: #eaeaea;
   --theme-action-menu-item-hover: rgba(0, 0, 0, 0.1);
   --theme-settings-input-bg: #edf2fa;
@@ -190,21 +182,13 @@
   --theme-home-button-secondary-border-hover: #293056;
 
   --theme-attachment-bg: #edf2fa;
-  --theme-attachment-error-bg: rgba(180, 35, 24, 0.3);
+  --theme-attachment-error-bg: rgba(20, 19, 19, 0.3);
   --theme-attachment-success-bg: #eaeaea;
   --theme-attachment-text: #0e0f0f;
   --theme-attachment-text-secondary: rgba(0, 0, 0, 0.8);
   --theme-attachment-icon: #ffffff;
   --theme-attachment-icon-spinner: #7cd4fd;
   --theme-attachment-icon-spinner-bg: #ffffff;
-
-  --theme-button-text: #a8a9ab;
-  --theme-button-code-hover-text: #0ba5ec;
-  --theme-button-code-hover-bg: #e8f7fe;
-  --theme-button-disable-hover-text: #854708;
-  --theme-button-disable-hover-bg: #fef7e6;
-  --theme-button-delete-hover-text: #b42318;
-  --theme-button-delete-hover-bg: #fee4e2;
 }
 
 [data-theme="light"] .text-white {
@@ -252,7 +236,6 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
-  background-color: white;
 }
 
 a {
@@ -293,8 +276,9 @@ a {
 .chat__message {
   transform-origin: 0 100%;
   transform: scale(0);
-  animation: message 0.15s ease-out 0s forwards;
+  animation: fadeUpIn 0.25s ease-in-out both;
   animation-delay: 500ms;
+  background-color: #0E0E11 !important;
 }
 
 @keyframes message {
@@ -657,8 +641,35 @@ dialog::backdrop {
     opacity: 0;
   }
 }
-
+@layer base {
+  body {
+    /* @apply bg-gradient-to-br from-ruyaPurple-500 via-ruyaPurple-200 to-ruyaTurquoise-500 text-ruyaPurple-700; */
+    min-height:100vh;
+    @apply bg-ruyaBlack text-white;
+  }
+}
 @layer components {
+  .gradient-border {
+  position: relative;
+  border-radius: 16px;
+  z-index: 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(176, 108, 255, 0.1), 0 0 40px rgba(61, 220, 255, 0.15); /* subtle outer glow */
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* consistent border thickness */
+  border-radius: inherit;
+  background: linear-gradient(to right, #B06CFF, #3DDCFF); /* ruyaPurple → ruyaTurquoise */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+  
   .radio-container:has(input:checked) {
     @apply border-blue-500 bg-blue-400/10 text-blue-800;
   }
@@ -874,12 +885,6 @@ dialog::backdrop {
   color: #fff;
 }
 
-.file-row {
-  border-left: none !important;
-  border-right: none !important;
-  border-top: none !important;
-}
-
 .file-row:nth-child(even) {
   @apply bg-theme-bg-primary;
   background-color: var(--theme-file-row-even);
@@ -896,11 +901,6 @@ dialog::backdrop {
 .file-row.selected:nth-child(odd) {
   background-color: var(--theme-file-row-selected-even);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="light"] .file-row.selected:nth-child(even),
-[data-theme="light"] .file-row.selected:nth-child(odd) {
-  border-bottom: 1px solid rgba(222, 222, 222, 0.5);
 }
 
 /* Flex upload modal to be a column when on small screens so that the UI

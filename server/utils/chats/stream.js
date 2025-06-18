@@ -4,6 +4,7 @@ const { WorkspaceChats } = require("../../models/workspaceChats");
 const { getVectorDbClass, getLLMProvider } = require("../helpers");
 const { writeResponseChunk } = require("../helpers/chat/responses");
 const { grepAgents } = require("./agents");
+const memoryIntegration = require("../../memory/memoryIntegration")
 const {
   grepCommand,
   VALID_COMMANDS,
@@ -19,11 +20,13 @@ async function streamChatWithWorkspace(
   workspace,
   message,
   chatMode = "chat",
+  mode = "query",
   user = null,
   thread = null,
   attachments = []
 ) {
   const uuid = uuidv4();
+  const systemPrompt = chatPrompt(workspace);
   const updatedMessage = await grepCommand(message, user);
 
   if (Object.keys(VALID_COMMANDS).includes(updatedMessage)) {
@@ -57,11 +60,38 @@ async function streamChatWithWorkspace(
 
   const messageLimit = workspace?.openAiHistory || 20;
   const hasVectorizedSpace = await VectorDb.hasNamespace(workspace.slug);
+  const hasOpenAIConnector = true; // Removed undefined checkOpenAIConnector call
   const embeddingsCount = await VectorDb.namespaceCount(workspace.slug);
+
+  // For single-user mode, use a consistent identifier across all threads
+  // For multi-user mode, use the actual user ID
+  if (!workspace || !workspace.id) {
+    console.error('Workspace is null or missing id:', workspace);
+    throw new Error('Workspace is required for chat');
+  }
+  
+  const userId = user?.id ? String(user.id) : `single_user_${workspace.id}`;
+  const workspaceId = String(workspace.id);  // Convert to string for API compatibility
+  let memoryContext = '';
+  let memoriesUsed = 0;
+
+  // Get memory context for the message
+  try {
+    const contextResult = await memoryIntegration.getChatContext(
+      userId,
+      message,
+      workspaceId
+    );
+    memoryContext = contextResult.context;
+    memoriesUsed = contextResult.memories_used;
+    console.log(`Loaded ${memoriesUsed} relevant memories for context`);
+  } catch (error) {
+    console.error('Failed to load memory context:', error);
+  }
 
   // User is trying to query-mode chat a workspace that has no data in it - so
   // we should exit early as no information can be found under these conditions.
-  if ((!hasVectorizedSpace || embeddingsCount === 0) && chatMode === "query") {
+  if ((!hasVectorizedSpace || embeddingsCount === 0) && chatMode === "query" && !memoryContext) {
     const textResponse =
       workspace?.queryRefusalResponse ??
       "There is no relevant information in this workspace to answer your query.";
@@ -105,12 +135,12 @@ async function streamChatWithWorkspace(
     messageLimit,
   });
 
-  // Look for pinned documents and see if the user decided to use this feature. We will also do a vector search
-  // as pinning is a supplemental tool but it should be used with caution since it can easily blow up a context window.
-  // However we limit the maximum of appended context to 80% of its overall size, mostly because if it expands beyond this
-  // it will undergo prompt compression anyway to make it work. If there is so much pinned that the context here is bigger than
-  // what the model can support - it would get compressed anyway and that really is not the point of pinning. It is really best
-  // suited for high-context models.
+  // Add memory context to context texts if available
+  if (memoryContext) {
+    contextTexts.push(memoryContext);
+  }
+
+  // Look for pinned documents and see if the user decided to use this feature
   await new DocumentManager({
     workspace,
     maxTokens: LLMConnector.promptWindowLimit(),
@@ -168,13 +198,6 @@ async function streamChatWithWorkspace(
     filterIdentifiers: pinnedDocIdentifiers,
   });
 
-  // Why does contextTexts get all the info, but sources only get current search?
-  // This is to give the ability of the LLM to "comprehend" a contextual response without
-  // populating the Citations under a response with documents the user "thinks" are irrelevant
-  // due to how we manage backfilling of the context to keep chats with the LLM more correct in responses.
-  // If a past citation was used to answer the question - that is visible in the history so it logically makes sense
-  // and does not appear to the user that a new response used information that is otherwise irrelevant for a given prompt.
-  // TLDR; reduces GitHub issues for "LLM citing document that has no answer in it" while keep answers highly accurate.
   contextTexts = [...contextTexts, ...filledSources.contextTexts];
   sources = [...sources, ...vectorSearchResults.sources];
 
@@ -256,26 +279,47 @@ async function streamChatWithWorkspace(
   }
 
   if (completeText?.length > 0) {
-    const { chat } = await WorkspaceChats.new({
-      workspaceId: workspace.id,
-      prompt: message,
-      response: {
-        text: completeText,
-        sources,
-        type: chatMode,
-        attachments,
-        metrics,
-      },
-      threadId: thread?.id || null,
-      user,
-    });
+    let chatRecord;
+    try {
+      chatRecord = await WorkspaceChats.new({
+        workspaceId: workspace.id,
+        prompt: message,
+        response: {
+          text: completeText,
+          sources,
+          type: chatMode,
+          attachments,
+          metrics,
+        },
+        threadId: thread?.id || null,
+        user,
+      });
+    } catch (error) {
+      console.error('Failed to save chat record:', error);
+    }
+
+    // Store the conversation in memory if in chat mode
+    if (chatMode === "chat") {
+      try {
+        await memoryIntegration.storeChatMemory(
+          userId,
+          message,
+          completeText,
+          workspaceId,
+          thread?.id ? String(thread.id) : null
+        );
+        console.log('Conversation stored in memory');
+      } catch (error) {
+        console.error('Failed to store conversation memory:', error);
+      }
+    }
 
     writeResponseChunk(response, {
       uuid,
       type: "finalizeResponseStream",
       close: true,
       error: false,
-      chatId: chat.id,
+      chatId: chatRecord?.chat?.id || null,
       metrics,
     });
     return;

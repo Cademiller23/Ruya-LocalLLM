@@ -1,5 +1,5 @@
 {
-  "name": "anything-llm-frontend",
+  "name": "ruya-llm-frontend",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -15,6 +15,7 @@
     "@mintplex-labs/piper-tts-web": "^1.0.4",
     "@phosphor-icons/react": "^2.1.7",
     "@tremor/react": "^3.15.1",
+    "axios": "^1.10.0",
     "dompurify": "^3.0.8",
     "file-saver": "^2.0.5",
     "he": "^1.2.0",

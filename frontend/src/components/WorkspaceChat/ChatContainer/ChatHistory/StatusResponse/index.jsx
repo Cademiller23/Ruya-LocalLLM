@@ -56,7 +56,7 @@ export default function StatusResponse({
               <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "" : "max-h-6"}`}
               >
-                <div className="text-theme-text-secondary font-mono leading-6">
+                <div className="text-white font-mono leading-6">
                   {!isExpanded ? (
                     <span className="block w-full truncate mt-[2px]">
                       {currentThought.content}
