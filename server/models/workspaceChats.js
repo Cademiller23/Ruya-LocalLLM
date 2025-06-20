@@ -13,13 +13,12 @@ const WorkspaceChats = {
     try {
       const chat = await prisma.workspace_chats.create({
         data: {
-          workspaceId,
+          workspaceId: parseInt(workspaceId),
+          user_id: user?.id ? parseInt(user.id) : null,
+          thread_id: threadId ? parseInt(threadId) : null,
           prompt,
-          response: JSON.stringify(response),
-          user_id: user?.id || null,
-          thread_id: threadId,
-          api_session_id: apiSessionId,
-          include,
+          response: JSON.stringify(response || {}),
+          include: true
         },
       });
       return { chat, message: null };

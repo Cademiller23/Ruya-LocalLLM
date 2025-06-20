@@ -9,6 +9,10 @@ load_dotenv()
 COHERE_API_KEY = os.getenv('COHERE_API_KEY', os.getenv('cohere_API_KEY'))  # Support both cases
 MEM0AI_API_KEY = os.getenv('MEM0AI_API_KEY', os.getenv('mem0AI_API_KEY'))  # Support both cases
 
+# Qdrant Configuration
+QDRANT_HOST = os.getenv('QDRANT_HOST', 'localhost')
+QDRANT_PORT = int(os.getenv('QDRANT_PORT', 6333))
+QDRANT_API_KEY = os.getenv('QDRANT_API_KEY', None)
 
 # Server Configuration
 PORT = int(os.getenv('PORT', 5002))
@@ -20,6 +24,12 @@ DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///memories.db')
 # Memory Configuration
 MEMORY_THRESHOLD = float(os.getenv('MEMORY_THRESHOLD', 0.25))
 MAX_MEMORIES = int(os.getenv('MAX_MEMORIES', 10))
+RERANK_TOP_N = int(os.getenv('RERANK_TOP_N', 5))
+
+# Memory Type Settings
+SHORT_TERM_DAYS = int(os.getenv('SHORT_TERM_DAYS', 7))
+ACCESS_COUNT_THRESHOLD = int(os.getenv('ACCESS_COUNT_THRESHOLD', 3))
+
 
 # Validate required environment variables
 if not COHERE_API_KEY:
@@ -43,6 +53,9 @@ if not MEM0AI_API_KEY:
     print("Warning: Mem0AI API key is not set. Some features may not work.")
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embed-english-v3.0")
+RERANK_MODEL = os.getenv("RERANK_MODEL", "rerank-english-v2.0")
+
+
 
 # Memory configuration for mem0AI
 MEM0_CONFIG = {
@@ -87,4 +100,56 @@ TEXT_PROCESSING = {
     "remove_stopwords": True,
     "use_stemming": True,
     "language": "english"
+}
+
+
+
+# Narrative Summary Configuration
+NARRATIVE_SUMMARY_CONFIG = {
+    "min_memories": 5,
+    "max_memories": 20,
+    "update_frequency": 10,  # Update after every N memories
+    "max_tokens": 150
+}
+
+# User Trait Extraction Configuration
+TRAIT_EXTRACTION_CONFIG = {
+    "extract_name": True,
+    "extract_location": True,
+    "extract_role": True,
+    "extract_timezone": True,
+    "analyze_sentiment": True,
+    "sentiment_keywords": {
+        "positive": ['happy', 'great', 'love', 'excellent', 'wonderful', 'amazing', 'fantastic'],
+        "negative": ['sad', 'angry', 'hate', 'terrible', 'awful', 'horrible', 'frustrated']
+    }
+}
+
+# Thread Configuration
+THREAD_CONFIG = {
+    "auto_save": True,
+    "save_interval": 5,  # Save after every N messages
+    "max_thread_age_days": 365,  # Keep threads for 1 year
+    "cleanup_enabled": False
+}
+
+# Reranking Configuration
+RERANK_CONFIG = {
+    "enabled": True,
+    "model": "rerank-english-v2.0",
+    "top_n": 5,
+    "min_relevance_score": 0.3
+}
+
+# Long-term/Short-term Memory Configuration
+MEMORY_TYPE_CONFIG = {
+    "important_keywords": [
+        'name is', 'i am', 'my goal', 'important', 'remember', 
+        'always', 'never forget', 'key point', 'critical'
+    ],
+    "promotion_rules": {
+        "access_count": 3,
+        "age_days": 7,
+        "minimum_accesses_for_promotion": 1
+    }
 }

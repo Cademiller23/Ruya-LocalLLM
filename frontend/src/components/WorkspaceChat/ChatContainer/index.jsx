@@ -7,6 +7,7 @@ import handleChat, { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
 import { useParams } from "react-router-dom";
+import MemoryIntegration from "@/utils/memoryIntegration"
 import { v4 } from "uuid";
 import handleSocketResponse, {
   websocketURI,
@@ -29,6 +30,51 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
   const [websocket, setWebsocket] = useState(null);
   const { files, parseAttachments } = useContext(DndUploaderContext);
 
+  // Load thread state on mount or thread change
+  useEffect(() => {
+    async function loadThreadHistory() {
+      if (!threadSlug || !workspace?.id) return;
+
+      console.log(`Loading thread state for: ${threadSlug}`);
+      const savedThread = await MemoryIntegration.loadThreadState(threadSlug);
+
+      if(savedThread && savedThread.messages) {
+        console.log(`Restored ${savedThread.messages.length} messages from memory`);
+        const restoredHistory = savedThread.messages.map(msg => ({
+          content: msg.content,
+          role: msg.role,
+          attachments: msg.attachments || [],
+          ...(msg.chatId && { chatId: msg.chatId }),
+          ...(msg.sources && { sources: msg.sources }),
+          animate: false,
+          pending: false,
+        }));
+        setChatHistory(restoredHistory);
+      } else {
+         // No saved state - this is normal for new threads
+      console.log("No saved thread state found (new thread)");
+      // Don't try to load from backend, just start fresh
+      setChatHistory([]);
+      }
+    }
+    loadThreadHistory();
+
+  }, [threadSlug, workspace?.id]);
+
+  // Helper to save thread state
+  const saveThreadState = async (history) => {
+    if (!threadSlug || !workspace?.id) return;
+
+    const messagesToSave = history.filter(msg => !msg.pending);
+
+    await MemoryIntegration.saveThreadState(
+      threadSlug,
+      String(workspace.id),
+      "persistent_user",
+      messagesToSave,
+      workspace.name
+    );
+  };
   // Maintain state of message from whatever is in PromptInput
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -183,7 +229,7 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         workspaceSlug: workspace.slug,
         threadSlug,
         prompt: promptMessage.userMessage,
-        chatHandler: (chatResult) =>
+        chatHandler: async (chatResult) => {
           handleChat(
             chatResult,
             setLoadingResponse,
@@ -191,11 +237,17 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
             remHistory,
             _chatHistory,
             setSocketId
-          ),
-        attachments,
-      });
-      return;
-    }
+          );
+          if (chatResult.type === "finalizeResponseStream" || chatResult.type === "textResponse") {
+            setTimeout(() => {
+              saveThreadState(_chatHistory);
+            }, 100);
+          }
+        },
+    attachments,
+    });
+    return;
+  }
     loadingResponse === true && fetchReply();
   }, [loadingResponse, chatHistory, workspace]);
 

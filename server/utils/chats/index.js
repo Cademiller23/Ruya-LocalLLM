@@ -73,6 +73,7 @@ async function recentChatHistory({
         thread_id: thread?.id || null,
         api_session_id: apiSessionId || null,
         include: true,
+
       },
       messageLimit,
       { id: "desc" }
@@ -89,14 +90,23 @@ async function recentChatHistory({
  * @returns {Promise<string>} - the base prompt
  */
 async function chatPrompt(workspace, user = null) {
-  const basePrompt =
+
+  let basePrompt =
     workspace?.openAiPrompt ??
     "Given the following conversation, relevant context, and a follow up question, reply with an answer to the current question the user is asking. Return only your response to the question given the above information following the users instructions as needed.";
-  return await SystemPromptVariables.expandSystemPromptVariables(
-    basePrompt,
-    user?.id
-  );
+  try {
+    const memoryIntegration = require("../../memory/memoryIntegration");
+    const username = await memoryIntegration.getUsername("persistent_user", String(workspace.id));
+    if (username) {
+      basePrompt = `The user's name is ${username}. ` + basePrompt;
+    }
+  } catch (e) {
+    console.error("Error getting username for chat prompt:", e);
+  }
+    return basePrompt 
+
 }
+
 
 // We use this util function to deduplicate sources from similarity searching
 // if the document is already pinned.

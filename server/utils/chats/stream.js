@@ -70,7 +70,7 @@ async function streamChatWithWorkspace(
     throw new Error('Workspace is required for chat');
   }
   
-  const userId = user?.id ? String(user.id) : `single_user_${workspace.id}`;
+  const userId = "persistent_user"; // Use a persistent user ID for single-user mode
   const workspaceId = String(workspace.id);  // Convert to string for API compatibility
   let memoryContext = '';
   let memoriesUsed = 0;

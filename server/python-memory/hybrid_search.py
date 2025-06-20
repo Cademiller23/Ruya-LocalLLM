@@ -49,6 +49,10 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     # Calculate norms
     norm_a = np.linalg.norm(a, axis=1, keepdims=True)
     norm_b = np.linalg.norm(b, axis=1, keepdims=True)
+
+    # Handle zero vectors
+    norm_a[norm_a == 0] = 1
+    norm_b[norm_b == 0] = 1
     
     # Calculate cosine similarity
     similarities = dot_product / (norm_a @ norm_b.T)
@@ -67,6 +71,8 @@ class HybridSearch:
         """
         Preprocess text by tokenizing, removing stopwords, and optionally stemming.
         """
+        if not text:
+            return []
         # Convert to lowercase
         text = text.lower()
 
@@ -137,28 +143,38 @@ class HybridSearch:
         if not document_embeddings:
             return []
         
-        # Convert to numpy array
-        if isinstance(document_embeddings, list):
-            doc_matrix = np.vstack([emb for emb in document_embeddings if emb is not None])
-        else:
-            doc_matrix = document_embeddings
+        # Filter out None embeddings and keep track of indices
+        valid_embeddings = []
+        valid_indices = []
+
+        for i, emb in enumerate(document_embeddings):
+            if emb is not None:
+                valid_embeddings.append(emb)
+                valid_indices.append(i)
+
+        if not valid_embeddings:
+            return []
         
+        # Conver to numpy array
+        doc_matrix = np.vstack(valid_embeddings)
+
         # Reshape query embedding if needed
         if query_embedding.ndim == 1:
             query_embedding = query_embedding.reshape(1, -1)
-        
-        # Calculate cosine similarity
+
+        # Calculate Cosine Simarity
         similarities = cosine_similarity(query_embedding, doc_matrix)[0]
 
-        # Get top-k results
+        # Get top-k results 
         top_indices = np.argsort(similarities)[::-1][:top_k]
 
-        # Return results 
+        # Return results with orig indices
         results = []
         for idx in top_indices:
-            if similarities[idx] > 0:
-                results.append((int(idx), float(similarities[idx])))
-        
+            if idx < len(similarities) and similarities[idx] > 0:
+                original_idx = valid_indices[idx]
+                results.append((original_idx, float(similarities[idx])))
+              
         return results
 
     def normalize_scores(self, scores: List[Tuple[int, float]])  -> Dict[int, float]:
@@ -166,9 +182,16 @@ class HybridSearch:
 
         if not scores:
             return {}
+        
+        # Extract score vals
+        score_values = [score for _, score in scores]
 
-        max_score = max(score for _, score in scores)
-        min_score = min(score for _, score in scores)
+        if not score_values:
+            return {}
+
+        
+        max_score = max(score_values)
+        min_score = min(score_values)
 
         if max_score == min_score:
             return {idx: 1.0 for idx, _ in scores}
@@ -179,9 +202,15 @@ class HybridSearch:
 
         return normalized
 
-    def hybrid_search(self, query: str, query_embedding: np.ndarray, documents: List[Dict[str, Any]], document_embeddings: List[np.ndarray], top_k: int = 10, alpha: float = 0.5) -> List[Dict[str, Any]]:
+    def hybrid_search(self, 
+                      query: str, 
+                      query_embedding: np.ndarray, 
+                      documents: List[Dict[str, Any]], 
+                      document_embeddings: List[np.ndarray], 
+                      top_k: int = 10, 
+                      alpha: float = 0.5) -> List[Dict[str, Any]]:
         # Perform hybrid search combining lexical and semantic search
-        lexical_results = self.semantic_search(query_embedding, document_embeddings, top_k * 2)
+        lexical_results = self.lexical_search(query, documents, top_k * 2)
         lexical_scores = self.normalize_scores(lexical_results)
 
         # Perform semantic search
@@ -206,7 +235,9 @@ class HybridSearch:
             }
 
             # Sort by combined score
-            sorted_indices = sorted(combined_scores.items(), key=lambda x: combined_scores[x]['combined_score'], reverse=True)
+            sorted_indices = sorted(combined_scores.items(), 
+                                    key=lambda x: combined_scores[x]['combined_score'], 
+                                    reverse=True)
 
             # Prepare final results
             results = []
