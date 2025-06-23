@@ -566,7 +566,7 @@ async def get_context_fallback(request: MemoryContextRequest):
         }
 
 
-# ========== MISSING FUNCTION 2: Thread save endpoint ==========
+
 @app.post("/thread/save")
 async def save_thread_state(request: ThreadStateRequest):
     """Save thread state to prevent resets"""
